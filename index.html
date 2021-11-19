@@ -2,8 +2,22 @@
 
 <head>
 	<meta charset="utf-8">
+	<link rel="stylesheet" type="text/css" href="style.css"/>
 	<script>
 		// TODO: create a handler
+
+		function radioCheck() {
+			const radios = document.getElementsByName('engine');
+
+			for (let i = 0; i < radios.length; i++) {
+				if (radios[i].checked) {
+					return true
+				}
+			}
+
+			return false
+		}
+
 		function setSearchEngine() {
 			document.getElementById('myButton').addEventListener('click', () => {
 				const userInput = document.querySelector('input[name="engine"]:checked').value;
@@ -18,10 +32,15 @@
 				let actionURL = actions[userInput];
 
 				const form = document.getElementById('searchForm');
-				const searchURL = actionURL + '?q=' + form[0].value;
-				form.action = searchURL;
 
-				//event.preventDefault(); needed initially to console.log, became unnecessary after line 22 was added
+				const searchURL = actionURL + '?q=' + form[0].value;
+
+
+				if (form[0].value != '' && radioCheck() === true) {
+					form.action = searchURL;
+				}
+
+				//event.preventDefault(); //needed initially to console.log, became unnecessary after line 22 was added
 			});
 		};
 
